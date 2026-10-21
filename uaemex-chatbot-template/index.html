@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PotroChat AI - Asistente Institucional UAEMex</title>
+  <link rel="icon" type="image/png" href="assets/escudo-uaemex.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Overlay para dispositivos móviles -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="app-container">
+    
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <aside class="sidebar" id="sidebar">
+      
+      <!-- Cabecera de la Barra Lateral -->
+      <div class="sidebar-header">
+        <a href="#" class="brand-wrapper">
+          <img src="assets/escudo-uaemex.png" alt="Escudo UAEMex" class="brand-logo">
+          <div class="brand-info">
+            <h1>PotroChat <span class="badge-gold">AI</span></h1>
+            <p>UAEMex Verde y Oro</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Botón Nuevo Chat -->
+      <button class="btn-new-chat" id="btnNewChat">
+        <span style="display:flex; align-items:center; gap:8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Nuevo chat
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+        </svg>
+      </button>
+
+      <!-- Historial de Conversaciones -->
+      <div class="chat-history" id="chatHistory">
+        <div class="history-group-title">Hoy</div>
+        <div class="history-item active" data-chat-id="1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="history-text">Consulta de Reinscripción y Becas</span>
+        </div>
+        <div class="history-item" data-chat-id="2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="history-text">Reglamento de Exámenes Extraordinarios</span>
+        </div>
+
+        <div class="history-group-title">Últimos 7 días</div>
+        <div class="history-item" data-chat-id="3">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="history-text">Calendario Escolar Semestre Activo</span>
+        </div>
+        <div class="history-item" data-chat-id="4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="history-text">Servicio Social y Prácticas</span>
+        </div>
+      </div>
+
+      <!-- Pie de Usuario en Sidebar -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">UA</div>
+          <div class="user-details">
+            <div class="user-name">Comunidad Universitaria</div>
+            <div class="user-role">Alumno UAEMex</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted)">
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="19" cy="12" r="1"></circle>
+            <circle cx="5" cy="12" r="1"></circle>
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL DE CHAT -->
+    <main class="main-chat">
+      
+      <!-- Barra Superior de Navegación -->
+      <header class="chat-navbar">
+        <div class="navbar-left">
+          <button class="btn-icon-nav" id="btnToggleSidebar" aria-label="Abrir o cerrar barra lateral">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="9" y1="3" x2="9" y2="21"></line>
+            </svg>
+          </button>
+          
+          <div class="model-selector">
+            <span class="model-dot"></span>
+            <span>PotroBot v2.5 Verde y Oro</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <div class="navbar-actions">
+          <button class="btn-badge-action" id="btnShareChat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            Compartir
+          </button>
+        </div>
+      </header>
+
+      <!-- Mensajes del Chat -->
+      <section class="chat-messages" id="chatMessages">
+        
+        <!-- Pantalla de bienvenida (Hero) -->
+        <div class="welcome-hero" id="welcomeHero">
+          <div class="hero-shield-wrapper">
+            <div class="hero-shield-glow"></div>
+            <img src="assets/escudo-uaemex.png" alt="Escudo Institucional UAEMex" class="hero-shield">
+          </div>
+          <h2>¿En qué puedo ayudarte hoy, Potro?</h2>
+          <p>Tu asistente inteligente con la identidad y el orgullo de la Universidad Autónoma del Estado de México.</p>
+          <div class="hero-motto">"Patria, Ciencia y Trabajo"</div>
+
+          <!-- Sugerencias de Inicio Rápido -->
+          <div class="suggestions-grid">
+            <div class="suggestion-card" data-prompt="¿Cuáles son los requisitos y fechas para las becas institucionales UAEMex?">
+              <div class="suggestion-title">
+                <span>Trámites de Becas</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="suggestion-desc">Convocatorias, requisitos socioeconómicos y de excelencia</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Explícame cómo funciona el periodo de reinscripción y altas/bajas de materias en control escolar.">
+              <div class="suggestion-title">
+                <span>Reinscripción y Horarios</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="suggestion-desc">Control escolar, créditos mínimos y materias en línea</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="¿Qué dice la legislación universitaria sobre las evaluaciones ordinarias y extraordinarias?">
+              <div class="suggestion-title">
+                <span>Reglamento Escolar</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="suggestion-desc">Criterios de acreditación, escalas y derechos del estudiante</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Ayúdame a redactar una solicitud formal dirigida a mi coordinación de facultad.">
+              <div class="suggestion-title">
+                <span>Redacción de Solicitudes</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="suggestion-desc">Formato institucional para peticiones académicas o justificantes</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenedor dinámico donde se agregan los mensajes -->
+        <div class="chat-content-container" id="messagesContainer"></div>
+
+      </section>
+
+      <!-- Barra de Entrada Inferior (Input Area) -->
+      <footer class="chat-input-area">
+        <form class="input-container" id="chatForm">
+          <button type="button" class="btn-input-attach" id="btnAttach" title="Adjuntar documento o archivo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+            </svg>
+          </button>
+          
+          <textarea 
+            id="chatInput" 
+            class="chat-textarea" 
+            rows="1" 
+            placeholder="Pregunta a PotroChat sobre trámites, materias, reglamentos..."
+          ></textarea>
+
+          <button type="submit" class="btn-send" id="btnSend" disabled aria-label="Enviar mensaje">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </button>
+        </form>
+
+        <p class="disclaimer-text">
+          PotroChat UAEMex es una plantilla demostrativa. Colores y emblema institucional bajo el lema 
+          <a href="#">Patria, Ciencia y Trabajo</a>.
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
